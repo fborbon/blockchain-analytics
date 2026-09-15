@@ -7,12 +7,12 @@ test between whale activity and price returns.
 
 **Live demo:** https://www.forwardforecasting.eu/blockchain-analytics/
 
-Inspired by the on-chain-insights and event-detection tasks in a Glassnode data
-challenge the author previously completed for a job application (Bitcoin BigQuery
-insights, anomaly/event detection on on-chain time series, address labeling). This
-project reuses the same spirit (and the same anomaly-detection method, reimplemented)
-on freely available public APIs instead of a paid BigQuery dataset, and adds the whale
-angle: does big-wallet activity actually lead the price, or not.
+Inspired by a prior personal analysis project covering on-chain insights and
+event detection (Bitcoin BigQuery insights, anomaly/event detection on on-chain time
+series, address labeling). This project reuses the same spirit (and the same
+anomaly-detection method, reimplemented) on freely available public APIs instead of a
+paid BigQuery dataset, and adds the whale angle: does big-wallet activity actually
+lead the price, or not.
 
 ## Table of contents
 
@@ -57,7 +57,7 @@ flowchart TD
 ## Data sources
 
 All sources are free, require no API key, and are directly scriptable, the same
-constraint this project's inspiration (a Glassnode take-home) explicitly called out.
+constraint this project's original inspiration explicitly called out.
 
 | Source | What | Access |
 |---|---|---|
@@ -75,11 +75,10 @@ chain activity) instead, scanned in full, not sampled. This is stated explicitly
 than silently passed off as a full year of coverage; see Limitations.
 
 **Address labeling (exchange vs. unknown wallet) was scoped out**, deliberately, rather
-than shipped with unverified labels. The Glassnode challenge's Data Engineer task is
-about exactly this (building a schema and pipeline for known-address labels from public
-sources like mining pool lists), and it is real, valuable follow-on work, but publishing
-specific "this address belongs to Exchange X" claims without a verified, sourced label
-list risks being simply wrong. See "What's next" below.
+than shipped with unverified labels. Building a schema and pipeline for known-address
+labels from public sources like mining pool lists is real, valuable follow-on work, but
+publishing specific "this address belongs to Exchange X" claims without a verified,
+sourced label list risks being simply wrong. See "What's next" below.
 
 ## Methodology
 
@@ -93,9 +92,9 @@ list risks being simply wrong. See "What's next" below.
 3. **Event/anomaly detection.** A generalized ESD (Extreme Studentized Deviate) test
    (Rosner, 1983) is run on the residuals of a series against its own 7-day centered
    moving average, applied independently to the price series and the active-addresses
-   series. This is a direct reimplementation of an approach the author wrote for the
-   original Glassnode challenge's event-detection task, modernized into a small
-   functional module (`src/anomaly.py`) instead of the original stateful class.
+   series. This is a direct reimplementation of an approach the author wrote for a
+   prior event-detection exercise, modernized into a small functional module
+   (`src/anomaly.py`) instead of the original stateful class.
 4. **Whale-influence test.** Daily whale BTC volume is correlated (Pearson and
    Spearman) against same-day and next-few-days BTC price returns, at lags from -3 to
    +3 days, to check whether whale activity leads price moves, lags them, or neither.
@@ -142,10 +141,10 @@ As of the most recent run:
   consolidating many customers' UTXOs into one large tx from an actual single large
   holder moving funds; that distinction needs address clustering heuristics (common
   input ownership, change-address detection) that this project doesn't attempt.
-- **No address labeling.** Known exchange/mining-pool address labels (the Glassnode
-  Data Engineer challenge's actual task) would let whale transactions be split into
-  "exchange inflow/outflow" vs. "unknown wallet", which is a much more informative
-  signal for price influence than raw large-transaction volume. See "What's next."
+- **No address labeling.** Known exchange/mining-pool address labels would let whale
+  transactions be split into "exchange inflow/outflow" vs. "unknown wallet", which is a
+  much more informative signal for price influence than raw large-transaction volume.
+  See "What's next."
 - **Correlation, not causation, and a short window.** Even a statistically significant
   lead-lag correlation over a few days of whale data would not establish that whales
   cause price moves; it could easily be the reverse (whales moving funds in response to
@@ -157,12 +156,11 @@ As of the most recent run:
 
 ## What's next, and why
 
-- **A proper address-label database**, following the Glassnode Data Engineer
-  challenge's actual brief: a small schema (address, label, source, confidence,
-  updated_at) seeded from public sources like mining-pool address lists, extensible to
-  more sources later, with conflict handling when two sources disagree. This is the
-  single highest-value addition, it directly unlocks "exchange netflow" as a much
-  stronger whale-influence signal than raw large-transaction volume.
+- **A proper address-label database**: a small schema (address, label, source,
+  confidence, updated_at) seeded from public sources like mining-pool address lists,
+  extensible to more sources later, with conflict handling when two sources disagree.
+  This is the single highest-value addition, it directly unlocks "exchange netflow" as
+  a much stronger whale-influence signal than raw large-transaction volume.
 - **A longer whale-activity backfill**, using a local Bitcoin Core node or an indexed
   block explorer (Electrs/Esplora self-hosted) instead of one HTTP call per block
   against a shared public API, to build a whale time series long enough (months, not a
