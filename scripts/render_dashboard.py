@@ -11,7 +11,7 @@ from pathlib import Path
 PROCESSED_DIR = Path(__file__).resolve().parent.parent / "data" / "processed"
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 
-CHART_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"
+CHART_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"
 
 
 def fmt_usd(n: float) -> str:
@@ -107,6 +107,7 @@ def build_html(data: dict) -> str:
   </div>
   <div class="links">
     <a href="https://www.forwardforecasting.eu/">Projects</a>
+    <a href="https://education.forwardforecasting.eu/blockchain-analytics/">Field Notes</a>
     <a href="https://github.com/fborbon/blockchain-analytics" target="_blank" rel="noopener">GitHub</a>
   </div>
 </header>
