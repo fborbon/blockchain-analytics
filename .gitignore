@@ -1,0 +1,14 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.env
+
+# Raw pulls are large and easily re-fetched by the fetch scripts -
+# only the small derived artifacts under data/processed/ are committed.
+data/raw/*.json
+
+.pytest_cache/
+.ruff_cache/
+*.log
