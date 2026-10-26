@@ -107,7 +107,7 @@ def build_html(data: dict) -> str:
   </div>
   <div class="links">
     <a href="https://www.forwardforecasting.eu/">Projects</a>
-    <a href="https://education.forwardforecasting.eu/blockchain-analytics/">Field Notes</a>
+    <a href="https://fieldnotes.forwardforecasting.eu/blockchain-analytics/">Field Notes</a>
     <a href="https://github.com/fborbon/blockchain-analytics" target="_blank" rel="noopener">GitHub</a>
   </div>
 </header>
