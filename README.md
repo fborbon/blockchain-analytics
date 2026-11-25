@@ -90,7 +90,7 @@ sourced label list risks being simply wrong. See "What's next" below.
    **>= 50 BTC** (roughly a few million USD at current prices). Flagged transactions are
    aggregated into a daily whale count and total BTC volume series.
 3. **Event/anomaly detection.** A generalized ESD (Extreme Studentized Deviate) test
-   (Rosner, 1983) is run on the residuals of a series against its own 7-day centered
+   ([Rosner, 1983](https://doi.org/10.1080/00401706.1983.10487848)) is run on the residuals of a series against its own 7-day centered
    moving average, applied independently to the price series and the active-addresses
    series. This is a direct reimplementation of an approach the author wrote for a
    prior event-detection exercise, modernized into a small functional module
